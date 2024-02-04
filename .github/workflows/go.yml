@@ -17,7 +17,8 @@ jobs:
           build() {
             export GOOS=$1
             export GOARCH=$2
-            go build -o release/litedns-${1}-${2}${3} main.go
+            export CGO_ENABLED=1
+            go build -ldflags "-s -w" -o release/litedns-${1}-${2}${3} main.go
           }
           build linux arm64
           build linux arm
