@@ -197,7 +197,7 @@ func handleDNSRequest(w dns.ResponseWriter, r *dns.Msg) {
 
 func listDomains(name string, start, pageSize int) {
 	refreshConnection()
-	query, err := dbc.Query(`select * from domains where name like concat('%',?) limit ? offset ?`, name, pageSize, start)
+	query, err := dbc.Query(`select * from domains where name like ? limit ? offset ?`, "%"+name, pageSize, start)
 	if err != nil {
 		log.Println("Failed to query records from database:", err)
 	}
