@@ -3,7 +3,7 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	_ "github.com/mattn/go-sqlite3"
+	_ "github.com/glebarez/sqlite"
 	"github.com/miekg/dns"
 	"log"
 	"os"
@@ -154,7 +154,7 @@ func startServer() {
 	// 创建 DNS 服务器实例
 
 	var lstPort = ":53"
-	if os.Args[1] == "-p" {
+	if len(os.Args) == 2 && os.Args[1] == "-p" {
 		lstPort = ":" + os.Args[2]
 	}
 
@@ -372,7 +372,7 @@ func buildDNSResponse(request *dns.Msg, records []dns.RR) *dns.Msg {
 func refreshConnection() {
 	var err error = nil
 	if dbc == nil {
-		dbc, err = sql.Open("sqlite3", "dns.db")
+		dbc, err = sql.Open("sqlite", "dns.db")
 		if err != nil {
 			log.Fatal(err, dbc)
 		}
