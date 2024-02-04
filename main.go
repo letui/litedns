@@ -27,18 +27,24 @@ func main() {
 		fmt.Println(`
 Usage: litedns [command] [arguments]
 
-Without commands to run 'litedns' means start dns-server.
+1.Without commands to run 'litedns' means start dns-server.
+2.You must complete the initialization process before starting the DNS server.
 
 Commands:
-	init                  Initialize the DNS database
-	list                  List all DNS records
-	add [type] [domain] [value]   Add a DNS record
-	rm [type] [domain]           Remove a DNS record
-	get [type] [domain]          Get the value of a specific DNS record
+	init			Initialize the DNS database
+	dns types		List all types of DNS-Record
+	domain list		List all domains
+	add [type] [domain] [value]		Add a DNS record
+	rm [type] [domain]			Remove a DNS record
+	get [type] [domain]			Get the value of a specific DNS record
 
 Options:
   -h, --help            Show this help message and exit
 			`)
+	}
+
+	if len(os.Args) == 3 && os.Args[1] == "dns" && os.Args[2] == "types" {
+		printDNSTypes()
 	}
 
 	if len(os.Args) == 2 && os.Args[1] == "init" {
@@ -71,6 +77,77 @@ Options:
 
 	defer dbc.Close()
 
+}
+
+func printDNSTypes() {
+	fmt.Println(`
+1    A           IPv4地址
+2    NS          域名服务器
+3    MD          主要负责人邮箱地址（可选项）
+4    MF          管理邮箱地址（可选项）
+5    CNAME       别名记录
+6    SOA         开始授权
+7    MB          邮件盒子记录（实验性功能）
+8    MG          邮件组记录（实验性功能）
+9    MR          邮件重命名记录（实验性功能）
+10   NULL        空记录（实验性功能）
+11   WKS         熟知服务描述符
+12   PTR         指针记录
+13   HINFO       主机信息
+14   MINFO       邮件交换信息
+15   MX          邮件交换器
+16   TXT         文本记录
+17   RP          负责人记录
+18   AFSDB       AFS数据库记录
+19   X25         X.25地址
+20   ISDN        ISDN地址
+21   RT          路由信息
+22   NSAP        NSAP地址
+23   NSAP-PTR    NSAP指针
+24   SIG         安全性签名
+25   KEY         密钥记录
+26   PX          X.400邮件交换记录
+27   GPOS        地理位置记录
+28   AAAA        IPv6地址
+29   LOC         位置记录
+30   NXT         下一记录
+31   EID         非唯一标识符
+32   NIMLOC      Nimrod位置记录
+33   SRV         服务记录
+34   ATMA        ATM地址
+35   NAPTR       NAPTR记录
+36   KX          密钥交换记录
+37   CERT        证书记录
+38   A6          IPv6地址（实验性功能）
+39   DNAME       域名别名
+40   SINK        沉默记录
+41   OPT         额外选项
+42   APL         地址前缀列表
+43   DS          DS记录
+44   SSHFP       SSH公钥指纹
+45   IPSECKEY    IPsec密钥记录
+46   RRSIG       RRSet签名
+47   NSEC        下一个域名记录
+48   DNSKEY      DNS密钥记录
+49   DHCID       DHCP客户端ID
+50   NSEC3       下一个域名记录（NSEC3版本）
+51   NSEC3PARAM  NSEC3参数记录
+52   TLSA        TLSA证书关联记录
+53   SMIMEA      S/MIME证书关联记录
+55   HIP         主机身份验证
+56   NINFO       节点信息
+57   RKEY        RKEY记录（实验性功能）
+58   TALINK      Trust Anchor LINK
+59   CDS         子域同步记录
+60   CDNSKEY     子域DNS密钥记录
+61   OPENPGPKEY  OpenPGP密钥记录
+62   CSYNC       信任锚同步记录
+99   SPF         发件人策略框架
+100  UINFO       用户信息（实验性功能）
+101  UID         用户标识符（实验性功能）
+102  GID         组标识符（实验性功能）
+103  UNSPEC      未指定的记录类型（实验性功能）
+`)
 }
 
 func startServer() {
