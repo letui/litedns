@@ -3,7 +3,6 @@ module litedns
 go 1.20
 
 require (
-	github.com/mattn/go-sqlite3 v1.14.21
 	github.com/miekg/dns v1.1.58
 )
 
